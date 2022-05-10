@@ -5,17 +5,17 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='package_name',
-    version='0.0.1',
+    version='1.0.0',
     author='Miguel Caldas',
     author_email='ma.caldas331@gmail.com',
-    description='Template for installation of Package',
+    description='Text processor used in topic modelling project',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/mihjovil/package_template',
+    url='https://github.com/mihjovil/text_processor',
     project_urls={
         "Other repos": "https://github.com/mihjovil?tab=repositories"
     },
     license='MIT',
-    packages=['package_name'],
-    install_requires=['requests'],
+    packages=['text_processor'],
+    install_requires=['spacy', 'gensim', 'langdetect', 'pickle'],
 )
