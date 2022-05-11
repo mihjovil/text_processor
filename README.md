@@ -12,7 +12,10 @@ The package consist of two `dataclasses` <a href="https://docs.python.org/3/libr
 
 In order to instantiate a `text_processor` tool, it is required to specify the language using the first part of the <a href="http://www.lingoes.net/en/translator/langcode.htm">ISO format</a> value. i.e. for English language the tool should be instantiated as:
 
-`processor = TextProcessor('en')`.
+```
+from text_processor.text_processor import TextProcessor
+processor = TextProcessor('en')
+```
 
 The processing processes available in this module are:
 1. Simple processing: This operation takes a `string` and returns a `List` of `strings`. This list is made of the words inside the input that remain after the simple filter from the `spacy` tool. This filter gets rid of stopwords in the specified language and using extra files specified by the user, it can ignore documents that contain words in the `blaklist` input or ignore words included in the `ignore_list` input. (check documentation of functions for more detail).
