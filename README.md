@@ -8,6 +8,10 @@ The package consist of two `dataclasses` <a href="https://docs.python.org/3/libr
 1. TextProcessor: The actual processing tool that is build using the `spacy tool`. This class is the one that has the functions to process the text.
 2. BagOfWords: This `dataclass` is simpler and with a more specific purpose. One of the functions of the `TextProcessor` will generate a `BagOfWords` as a result. This function us used to build a corpus and a `gensim Dictionary`. This comes in handy when using the `LDA` models of `gensim`. Both of these variables are what make a `BagOfWords dataclass`.
 
+## How to install?
+In any python environement or virtual environment just use the following line to install:
+`pip install git+https://github.com/mihjovil/text_processor`
+
 ## How to use?
 
 In order to instantiate a `text_processor` tool, it is required to specify the language using the first part of the <a href="http://www.lingoes.net/en/translator/langcode.htm">ISO format</a> value. i.e. for English language the tool should be instantiated as:
