@@ -10,6 +10,7 @@ The package consist of two `dataclasses` <a href="https://docs.python.org/3/libr
 
 ## How to install?
 In any python environement or virtual environment just use the following line to install:
+
 `pip install git+https://github.com/mihjovil/text_processor`
 
 ## How to use?
