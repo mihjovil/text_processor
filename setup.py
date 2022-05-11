@@ -17,5 +17,5 @@ setuptools.setup(
     },
     license='MIT',
     packages=['text_processor'],
-    install_requires=['spacy', 'gensim', 'langdetect', 'pickle'],
+    install_requires=['spacy', 'gensim', 'langdetect'],
 )
