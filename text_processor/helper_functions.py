@@ -38,6 +38,36 @@ class ExceptionCase:
     text: str
     def __str__(self) -> str:
         return f'CAUSE: {self.exception}. TEXT: {self.text}'
+    
+    
+def clean_special_characters(text: str) -> str:
+    """
+    Cleans a text from any special characters and returns only the words. This characters are puntuation
+    marks or symbols, not letters from different alphabets.
+
+    Args:
+    1. text (str): The text that will be cleansed
+
+    Returns:
+    str: The new text without special characters
+    """
+    words = text.split()
+    url_pattern = "((http|https):\/\/([^\s]+))"
+    words = [re.sub(url_pattern, " <<URL>> ", word) for word in words]
+    return " ".join([re.sub('\W+', '', word) for word in words])
+
+def skip_part(part):
+    """
+    Checks if given mailpart is attachment
+    """
+
+    if re.match(r'(\s)*?attachment.*', str(part['Content-Disposition'])):
+        return True
+    if part.get_content_type() != 'text/html' and part.get_content_type() != 'text/plain':
+        return True
+    if part.get_param('name'):
+        return True
+    return False
 
 def get_text_from_html(html_text:str) -> str:    
     soup = BeautifulSoup(html_text, features = 'html.parser')
