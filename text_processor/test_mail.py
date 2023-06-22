@@ -9,6 +9,7 @@ import re
 import logging
 import langdetect
 import os
+import sys
 
 # region Constants
 # TODO Use the propoer filepath for the log
@@ -23,7 +24,17 @@ spacy_language_models = {
     "es": ""
 }
 
-log = logging.getLogger(LOG_PATH)
+def setup_logging(config: dict):
+    """ This function will setup the loggging to have the desired logging when importing the package
+
+    Args:
+        config (dict): A dictionary with the filename, the logging level and the format of the entries
+    """
+    logging.basicConfig(
+        filename=config["filename"],
+        level=config["level"],
+        format=config["format"]
+    )    
 
 blacklist = {}
 # endregion
@@ -118,14 +129,14 @@ def get_text_parts_of_eml_file(file_path: str, data: bytes) -> list:
             try:
                 msg = BytesParser(policy=policy.default).parse(f)
             except Exception as e:
-                log.info(f"Failed to parse the EML file with the BytesParser. {e}")
+                logging.info(f"{LOG_PREFIX}: Failed to parse the EML file with the BytesParser. {e}")
                 msg = email.message_from_binary_file(f)
     else:
         # the filepath does not exist, parsing the message parts from the binary data
         try:
             msg = BytesParser(policy=policy.default).parse(data)
         except Exception as e:
-            log.info(f"Failed to parse the EML file with the BytesParser. {e}")
+            logging.info(f"{LOG_PREFIX}: Failed to parse the EML file with the BytesParser. {e}")
             msg = email.message_from_bytes(data.getvalue())
     return [part for part in msg.walk() if part.get_content_maintype() == "text"]
 # endregion
@@ -188,15 +199,15 @@ class TextProcessor:
             return ""
         text = get_text_from_msg_parts(get_text_parts_of_eml_file(filepath, data))
         if text.strip() == "":
-            log.info("Failed to retrieve any text form the mail")
+            logging.info(f"{LOG_PREFIX}: Failed to retrieve any text form the mail")
             return ""
         language = detect_language(text)
         if language == "":
-            log.info("The text in this mail is in an unsupported language")
+            logging.info(f"{LOG_PREFIX}: The text in this mail is in an unsupported language")
             return ""
         return self.text_processing(text, blacklist, language, replace_names, replace_tel)
 
 # endregion
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     pass
